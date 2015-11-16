@@ -1,5 +1,6 @@
 {
     "variables": {
+        "infrastructure_dir": "{{env `ORG`}}-infrastructure",
         "stack": "{{env `STACK`}}",
         "layer": "{{env `LAYER`}}",
         "region": "{{env `REGION`}}",
@@ -37,8 +38,8 @@
         },
         {
             "type": "ansible-local",
-            "playbook_dir": "/opt/omnia/reactiveops-infrastructure",
-            "playbook_file": "/opt/omnia/reactiveops-infrastructure/tasks/{{user `stack`}}/{{user `layer`}}/packers/packer-base.yml",
+            "playbook_dir": "/opt/omnia/{{user `infrastructure_dir`}}",
+            "playbook_file": "/opt/omnia/{{user `infrastructure_dir`}}/tasks/{{user `stack`}}/{{user `layer`}}/packers/packer-base.yml",
             "extra_arguments": [
                 "-e stack={{ user `stack` }}",
                 "-e layer={{ user `layer` }}"

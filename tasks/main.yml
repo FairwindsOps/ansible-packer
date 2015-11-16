@@ -1,25 +1,44 @@
 ---
 
+- name: install requirements
+  sudo: true
+  apt: name="{{ item }}" state='present' update_cache='yes' cache_valid_time='3600'
+  with_items:
+   - build-essential
+   - unzip
+   - python-pip
+   - python-dev
+   - git
+  tags:
+    - packages
+
+- name: download packer
+  get_url: url="{{packer_url}}" dest='/tmp/packer.zip'
+
+- name: unarchive packer
+  sudo: true
+  unarchive: src='/tmp/packer.zip' dest="{{packer_install_dir}}" copy='no' creates="{{packer_install_dir}}/packer"
+
 - file:
-    path: /opt/packer
-    state: directory
-    owner: deploy
-    group: deploy
+    path: "{{packer_template_dir}}"
+    state: 'directory'
+    owner: 'deploy'
+    group: 'deploy'
   become: true
-  become_user: root
+  become_user: 'root'
 
 - copy:
-    src: packer.json
-    dest: /opt/packer/packer.json
-    owner: deploy
-    group: deploy
+    src: 'packer.json'
+    dest: "{{packer_template_dir}}/packer.json"
+    owner: 'deploy'
+    group: 'deploy'
   become: true
-  become_user: root
+  become_user: 'root'
 
 - copy:
-    src: base.json
-    dest: /opt/packer/base.json
-    owner: deploy
-    group: deploy
+    src: 'base.json'
+    dest: "{{packer_template_dir}}/base.json"
+    owner: 'deploy'
+    group: 'deploy'
   become: true
-  become_user: root
+  become_user: 'root'
