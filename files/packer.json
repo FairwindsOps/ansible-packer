@@ -1,0 +1,56 @@
+{
+    "variables": {
+        "environment":     "{{env `ENVIRONMENT`}}",
+        "stack":           "{{env `STACK`}}",
+        "layer":           "{{env `LAYER`}}",
+        "identifying_sha": "{{env `IDENTIFYING_SHA`}}",
+        "source_ami":      "{{env `SOURCE_AMI`}}",
+        "instance_type":   "{{env `INSTANCE_TYPE`}}",
+        "uuid":            "{{env `UUID`}}",
+        "app_branch":      "{{env `APP_BRANCH`}}"
+    },
+    "builders": [
+        {
+            "type":                 "amazon-ebs",
+            "region":               "{{user `region`}}",
+            "source_ami":           "{{user `source_ami`}}",
+            "instance_type":        "{{user `instance_type`}}",
+            "ssh_username":         "ubuntu",
+            "ami_name":             "packer-web-{{timestamp}}",
+            "tags": {
+                "Name":             "{{ user `stack` }}-{{ user `layer` }}-{{ user `app_branch` }}",
+                "stack":            "{{ user `stack` }}",
+                "layer":            "{{ user `layer` }}",
+                "identifying_sha":  "{{ user `identifying_sha` }}",
+                "uuid":             "{{ user `uuid` }}"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "/home/deploy/.ssh/id_rsa",
+            "destination": "/tmp/deploy_key"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "# The below commands along with source AMI ami-d05e75b8 were used to create ami-cd2999a6 / '14.04_with_ansible' and were later commented out. For speed.",
+                "#sleep 30",
+                "#sudo apt-get update",
+                "#sudo apt-get install -y python-dev python-pip",
+                "#sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_dir": "/opt/omnia/reactiveops-infrastructure",
+            "playbook_file": "/opt/omnia/reactiveops-infrastructure/tasks/{{user `stack`}}/{{user `layer`}}/packers/packer-deploy.yml",
+            "extra_arguments": [
+                "-e env={{ user `environment` }}",
+                "-e stack={{ user `stack` }}",
+                "-e branch={{ user `app_branch` }}"
+            ]
+        }
+    ]
+}

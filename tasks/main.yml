@@ -1,0 +1,25 @@
+---
+
+- file:
+    path: /opt/packer
+    state: directory
+    owner: deploy
+    group: deploy
+  become: true
+  become_user: root
+
+- copy:
+    src: packer.json
+    dest: /opt/packer/packer.json
+    owner: deploy
+    group: deploy
+  become: true
+  become_user: root
+
+- copy:
+    src: base.json
+    dest: /opt/packer/base.json
+    owner: deploy
+    group: deploy
+  become: true
+  become_user: root
