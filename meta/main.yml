@@ -1,0 +1,9 @@
+---
+
+galaxy_info:
+  description: install packer 
+  company: ReactiveOps
+  #license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 2.0
+  galaxy_tags:
+    - packer 
