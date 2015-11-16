@@ -11,7 +11,7 @@ Role Variables
 `packer_install_dir` : location to install packer binaries
 `packer_template_dir` : location to install default Omnia packer build templates
 
-#Example
+Example:
 ```
 packer_version: '0.8.6'
 packer_url: "https://releases.hashicorp.com/packer/{{packer_version}}/packer_{{packer_version}}_linux_amd64.zip"
