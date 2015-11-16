@@ -7,9 +7,13 @@ Role Variables
 --------------
 
 `packer_version` : version of packer to install 
+
 `packer_url` : download url for packer zip. can be found at https://www.packer.io/downloads.html
+
 `packer_install_dir` : location to install packer binaries
+
 `packer_template_dir` : location to install default Omnia packer build templates
+
 
 Example:
 ```
