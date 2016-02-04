@@ -5,3 +5,6 @@ packer_url: "https://releases.hashicorp.com/packer/{{packer_version}}/packer_{{p
 
 packer_install_dir: '/usr/local/bin'
 packer_template_dir: '/opt/packer'
+
+deploy_user: 'deploy'
+deploy_group: 'deploy'
