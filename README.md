@@ -30,4 +30,4 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: reactiveops.packer, packer_version: '0.8.6' }
+         - { role: fairwinds.packer, packer_version: '0.8.6' }
